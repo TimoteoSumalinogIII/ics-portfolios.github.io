@@ -27,6 +27,8 @@
     "fs-promise": "^0.5.0",
     "jsonfile": "^2.4.0",
     "jsonic": "^0.2.2",
+    "live-server": "^1.2.1",
+    "liveserver": "^0.1.20",
     "request": "^2.74.0",
     "underscore": "^1.8.3"
   },
