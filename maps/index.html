@@ -67,6 +67,43 @@ layout: map
         //   var address = document.getElementById('address').value;
 
 
+
+          oReq.onload = function(e) {
+          
+              
+          var arraybuffer = oReq.response;
+
+          /* convert data to binary string */
+          var data = new Uint8Array(arraybuffer);
+          var arr = new Array();
+          for(var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+          var bstr = arr.join("");
+
+          /* Call XLSX */
+          var workbook = XLSX.read(bstr, {type:"binary"});
+
+          /* DO SOMETHING WITH workbook HERE */
+          var first_sheet_name = workbook.SheetNames[0];
+          /* Get worksheet */
+          var worksheet = workbook.Sheets[first_sheet_name];
+          data = XLSX.utils.sheet_to_json(worksheet,{raw:true});
+
+          console.log(data)
+          console.log(data[0]);
+
+          console.log(data[0].Location)
+
+
+          }
+          oReq.send();
+
+
+
+
+
+
+
+
         geocoder.geocode({'address': data[0].Location}, function(results, status) {
                 console.log("works")
                 if (status === 'OK') {
@@ -82,47 +119,8 @@ layout: map
 
     }
 
-    oReq.onload = function(e) {
-            return new Promise(resolve => {
+     
 
-              setTimeout(() => {
-                      var arraybuffer = oReq.response;
-
-                      /* convert data to binary string */
-                      var data = new Uint8Array(arraybuffer);
-                      var arr = new Array();
-                      for(var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
-                      var bstr = arr.join("");
-
-                      /* Call XLSX */
-                      var workbook = XLSX.read(bstr, {type:"binary"});
-
-                      /* DO SOMETHING WITH workbook HERE */
-                      var first_sheet_name = workbook.SheetNames[0];
-                      /* Get worksheet */
-                      var worksheet = workbook.Sheets[first_sheet_name];
-                      data = XLSX.utils.sheet_to_json(worksheet,{raw:true});
-
-                      console.log(data)
-                      console.log(data[0]);
-
-                      console.log(data[0].Location)
-
-                resolve('resolved')
-              }, 2000)
-            })
-        }
-        oReq.send();
-
-        async function oof() {
-          await oReq.onload
-          console.log(data)
-
-        }
-        console.log("ooga boooga")
-      
-        oof()
-      
 
 
         
