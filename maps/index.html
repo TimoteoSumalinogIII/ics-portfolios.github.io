@@ -16,7 +16,8 @@ layout: map
     // Initialize and add the map
     function initMap() {
       // The location of Uluru
-      var uluru = {lat: -25.344, lng: 131.036};
+      var uluru = codeAddress("94-1143 Hinaea St.")
+      console.log(uluru)
       // The map, centered at Uluru
       var map = new google.maps.Map(
           document.getElementById('map'), {zoom: 4, center: uluru});
@@ -24,9 +25,9 @@ layout: map
       var marker = new google.maps.Marker({position: uluru, map: map});
     }
 
-    function codeAddress() {
+    function codeAddress(address) {
     // var address = document.getElementById('address').value;
-    geocoder.geocode( "94-1143 Hinaea St.", function(results, status) {
+    geocoder.geocode( address, function(results, status) {
         if (status == 'OK') {
             map.setCenter(results[0].geometry.location);
             var marker = new google.maps.Marker({
