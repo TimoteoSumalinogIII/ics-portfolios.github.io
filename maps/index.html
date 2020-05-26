@@ -48,6 +48,8 @@ layout: map
                 center: {lat: position.coords.latitude, lng: position.coords.longitude}
             });
 
+
+         
             var geocoder = new google.maps.Geocoder();
             geocodeAddress(geocoder, map)
             document.getElementById('submit').addEventListener('click', function() {
@@ -72,7 +74,7 @@ layout: map
           
               
           var arraybuffer = oReq.response;
-
+            var locationData = [];
           /* convert data to binary string */
           var data = new Uint8Array(arraybuffer);
           var arr = new Array();
@@ -95,28 +97,32 @@ layout: map
 
 
          
+        
 
 
 
-
-
-
-        geocoder.geocode({'address': data[0].Location}, function(results, status) {
-                console.log("works")
-                if (status === 'OK') {
-                resultsMap.setCenter(results[0].geometry.location);   
-                var marker = new google.maps.Marker({
-                    map: resultsMap,
-                    position: results[0].geometry.location
+        for (var i = 0; i < data.length; i++) {
+            geocoder.geocode({'address': data[i].Location}, function(results, status) {
+                    console.log("works")
+                    if (status === 'OK') {
+                    resultsMap.setCenter(results[0].geometry.location);   
+                    var marker = new google.maps.Marker({
+                        map: resultsMap,
+                        position: results[0].geometry.location
+                    });
+                    } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                    }
                 });
-                } else {
-                alert('Geocode was not successful for the following reason: ' + status);
-                }
-            });
+              }
+              locationData.push(data[i].Location)
           }
           oReq.send();
 
-
+          var heatmap = new google.maps.visualization.HeatmapLayer({
+              data: locationData;
+            });
+            heatmap.setMap(resultsMap);
     }
 
      
