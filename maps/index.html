@@ -56,30 +56,18 @@ layout: map
         });
     }
 
+
+    var url = "xd.xlsx";
+    var data;
+    var oReq = new XMLHttpRequest();
+    oReq.open("GET", url, true);
+    oReq.responseType = "arraybuffer";
+
     function geocodeAddress(geocoder, resultsMap) {
       var address = document.getElementById('address').value;
-      geocoder.geocode({'address': address}, function(results, status) {
-        if (status === 'OK') {
-          resultsMap.setCenter(results[0].geometry.location);   
-          var marker = new google.maps.Marker({
-            map: resultsMap,
-            position: results[0].geometry.location
-          });
-        } else {
-          alert('Geocode was not successful for the following reason: ' + status);
-        }
-      });
-    }
 
 
-        
-        var url = "xd.xlsx";
-        var data;
-        var oReq = new XMLHttpRequest();
-        oReq.open("GET", url, true);
-        oReq.responseType = "arraybuffer";
-
-        oReq.onload = function(e) {
+      oReq.onload = function(e) {
             var arraybuffer = oReq.response;
 
             /* convert data to binary string */
@@ -96,14 +84,31 @@ layout: map
             /* Get worksheet */
             var worksheet = workbook.Sheets[first_sheet_name];
             data = XLSX.utils.sheet_to_json(worksheet,{raw:true});
-            // console.log(XLSX.utils.sheet_to_json(worksheet,{raw:true}));
-            // console.log(data)
             console.log(data[0]);
+      
+            
 
+            geocoder.geocode({'address': data[0].Location}, function(results, status) {
+                if (status === 'OK') {
+                resultsMap.setCenter(results[0].geometry.location);   
+                var marker = new google.maps.Marker({
+                    map: resultsMap,
+                    position: results[0].geometry.location
+                });
+                } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
 
         }
         oReq.send();
+    }
 
+
+        
+      
+
+      
 
 
         
