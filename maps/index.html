@@ -100,9 +100,8 @@ layout: map
             // console.log(data)
             // console.log(data[0]);
         }
-        oReq.send();
+        oReq.send().then(console.log(data));
 
-        await console.log(data) 
         
   </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcitX2jxGewJTZZMMxLA4VewPJ2_dGApg&callback=initMap" type="text/javascript"></script>
