@@ -35,10 +35,21 @@ layout: map
   </div>
   <div id="map"></div>
   <script>
+    var long;
+    var lat;
+    function getLocation() {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            lat = position.coords.latitude;
+            long = position.coords.longitude;
+        });
+    }
+
+    getLocation()
+
     function initMap() {
       var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 3,
-        center: {lat: -34.397, lng: 150.644}
+        center: {lat: lat, lng: long}
       });
       var geocoder = new google.maps.Geocoder();
 
