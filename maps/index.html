@@ -86,7 +86,7 @@ layout: map
             data = XLSX.utils.sheet_to_json(worksheet,{raw:true});
             console.log(data[0]);
       
-            
+            console.log(data[0].Location)
 
             geocoder.geocode({'address': data[0].Location}, function(results, status) {
                 if (status === 'OK') {
