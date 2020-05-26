@@ -49,7 +49,7 @@ layout: map
             });
 
             var geocoder = new google.maps.Geocoder();
-
+            geocodeAddress(geocoder, map)
             document.getElementById('submit').addEventListener('click', function() {
                 geocodeAddress(geocoder, map);
             })
