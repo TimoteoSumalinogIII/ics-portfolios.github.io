@@ -39,22 +39,17 @@ layout: map
 
 
     function initMap() {
-        var lat;
-        var long;
+       
         navigator.geolocation.getCurrentPosition(function(position) {
-            lat = position.coords.latitude;
-            long = position.coords.longitude;
-        });
-        console.log(long, lat)
       var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 3,
-        center: {lat: lat, lng: long}
+        center: {lat: position.coords.latitude, lng: position.coords.longitude}
       });
       var geocoder = new google.maps.Geocoder();
 
       document.getElementById('submit').addEventListener('click', function() {
         geocodeAddress(geocoder, map);
-      });
+      }) });
     }
 
     function geocodeAddress(geocoder, resultsMap) {
