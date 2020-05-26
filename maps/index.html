@@ -82,7 +82,7 @@ layout: map
 
     }
 
-    oReq.onload = function(e) {
+    oReq.onload = async function(e) {
             var arraybuffer = oReq.response;
 
             /* convert data to binary string */
@@ -104,11 +104,13 @@ layout: map
             console.log(data[0]);
       
             console.log(data[0].Location)
-
-         
         }
-    oReq.send();
+        oReq.send();
 
+        function oof() {
+          await oReq.onload
+          console.log(data)
+        }
         setTimeout(console.log(data), 3000)
         
       
