@@ -100,7 +100,9 @@ layout: map
             // console.log(data)
             // console.log(data[0]);
         }
-        oReq.send().then(console.log(data));
+        oReq.send();
+
+        oReq.onload.then(console.log(data));
 
         
   </script>
